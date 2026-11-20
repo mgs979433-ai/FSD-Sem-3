@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Electronics Store</title>
+</head>
+
+<body>
+
+    <h1>Electronics Store</h1>
+
+    <input id="id" placeholder="Product ID">
+    <input id="name" placeholder="Product Name">
+    <input id="price" placeholder="Price">
+
+    <br><br>
+
+    <button onclick="addProduct()">Add Product</button>
+    <button onclick="updateProduct()">Update Product</button>
+    <button onclick="deleteProduct()">Delete Product</button>
+    <button onclick="showProducts()">Show Products</button>
+
+    <div id="data"></div>
+
+    <script>
+
+        // GET
+        async function showProducts() {
+            let res = await fetch("/products");
+            let data1 = await res.json();
+
+            data.innerHTML = data1.map(p =>
+                `<p>ID: ${p.id} | ${p.name} - ₹${p.price}</p>`
+            ).join("");
+        }
+
+
+        // POST
+        async function addProduct() {
+            await fetch("/products", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: Date.now(),
+                    name: name.value,
+                    price: price.value
+                })
+            });
+
+            showProducts();
+        }
+
+
+        // PUT
+        async function updateProduct() {
+            await fetch(`/products/${id.value}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name.value,
+                    price: price.value
+                })
+            });
+
+            showProducts();
+        }
+
+
+        // DELETE
+        async function deleteProduct() {
+            await fetch(`/products/${id.value}`, {
+                method: "DELETE"
+            });
+
+            showProducts();
+        }
+
+    </script>
+
+</body>
+</html>
