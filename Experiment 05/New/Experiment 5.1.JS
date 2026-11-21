@@ -4,8 +4,8 @@ const app = express();
 // student data
 
 let students = [
-  { id: 1, name: "Rahul", branch: "CSE" },
-  { id: 2, name: "Aman", branch: "IT" }
+  { id: 1, name: "Shahid Madani", branch: "CSE" },
+  { id: 2, name: "Salaar Shahid", branch: "IT" }
 ];
 
 // GET route
